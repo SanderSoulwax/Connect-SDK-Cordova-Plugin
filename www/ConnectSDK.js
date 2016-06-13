@@ -1392,6 +1392,13 @@ var WebAppSession = createClass(
         return this._device._sendCommand("webAppSession", "setWebAppSessionListener", {objectId: this._objectId});
      },
 
+    /**
+     * Play media on the web app
+     */ 
+    playMedia: function(source, contentType, options) {
+        this.acquire();
+        return this._device._sendCommand("webAppSession", "playMedia", {objectId: this._objectId, url: source, mimeType: contentType, options: options })
+    },
 
     /**
      * Send a text string to the app. Must be connected first.
