@@ -929,6 +929,50 @@ static id orNull (id obj)
     [command sendSuccess:nil];
 }
 
+- (void) webAppSession_playMedia:(JSCommand*)command
+{
+    NSString* objectId = command.args[@"objectId"];
+
+    WebAppSessionWrapper* wrapper = [command.plugin getObjectWrapper:objectId];
+    WebAppSession* session = wrapper.session;
+
+    MediaInfo *mediaInfo = [[MediaInfo alloc]
+            initWithURL:[NSURL URLWithString:command.args[@"url"]]
+               mimeType:command.args[@"mimeType"]];
+    BOOL shouldLoop = NO;
+
+    NSDictionary* options = command.args[@"options"];
+    if (options) {
+        mediaInfo.title = options[@"title"];
+        mediaInfo.description = options[@"description"];
+
+        ImageInfo *imageInfo = [[ImageInfo alloc]
+                initWithURL:[NSURL URLWithString:options[@"iconUrl"]]
+                       type:ImageTypeAlbumArt];
+        [mediaInfo addImage:imageInfo];
+
+        if (options[@"shouldLoop"] == [NSNumber numberWithBool:YES]) {
+            shouldLoop = YES;
+        }
+
+        NSDictionary *subtitleDict = options[@"subtitles"];
+        if (subtitleDict) {
+            mediaInfo.subtitleInfo = [SubtitleInfo infoWithURL:[NSURL URLWithString:subtitleDict[@"url"]]
+                                                      andBlock:^(SubtitleInfoBuilder *builder) {
+                                                          builder.mimeType = subtitleDict[@"mimeType"];
+                                                          builder.language = subtitleDict[@"language"];
+                                                          builder.label = subtitleDict[@"label"];
+                                                      }];
+        }
+    }
+
+    [session.mediaPlayer playMediaWithMediaInfo:mediaInfo
+                                    shouldLoop:shouldLoop
+                                       success:command.mediaLaunchSuccess
+                                       failure:command.failure];
+
+}
+
 - (void) webAppSession_sendText:(JSCommand*)command
 {
     NSString* objectId = command.args[@"objectId"];
