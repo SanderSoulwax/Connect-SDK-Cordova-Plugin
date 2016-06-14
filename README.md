@@ -1,3 +1,6 @@
+#Why
+This is a forked repository of the official Connect SDK Cordova Plugin. Made because there was no functionality to beam a cast app and then play a video on that app. 
+
 # Connect SDK Cordova/PhoneGap Plugin
 
 Connect SDK is an open source framework that unifies device discovery and connectivity by providing one set of methods that work across multiple television platforms and protocols.
