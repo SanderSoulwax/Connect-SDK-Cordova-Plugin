@@ -31,8 +31,8 @@ function AndroidInstall() {}
 AndroidInstall.prototype.steps = [
 	"createTemporaryDirectory",
 	"cloneConnectSDK",
-	"downloadFlingSDK",
-	"cleanup"
+	"downloadFlingSDK"
+	// "cleanup"
 ];
 
 AndroidInstall.prototype.start = function () {
@@ -163,7 +163,7 @@ AndroidInstall.prototype.downloadFlingSDK = function () {
 			});
 			uz.on('close', function () {
 				if (deferred.promise.inspect().state !== "rejected") {
-					console.log("Moving AmazonFling.jar");
+					// console.log("Moving AmazonFling.jar");
 					// Q.nfcall(exec, commands.mv + " " + safePath(paths.AmazonFling_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\ '))
 					// .then(function () {
 					// 	console.log("Moving WhisperPlay.jar");
@@ -175,10 +175,11 @@ AndroidInstall.prototype.downloadFlingSDK = function () {
 					// .catch(function (err) {
 					// 	deferred.reject(err);
 					// });
-                    fs.renameSync(safePath(paths.AmazonFling_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\\ '));
-                    fs.rename(safePath(paths.WhisperPlay_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\\ '), function() {
-                        deferred.resolve();
-                    });
+                    // fs.renameSync(safePath(paths.AmazonFling_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\\ '));
+                    // fs.rename(safePath(paths.WhisperPlay_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\\ '), function() {
+                     //    deferred.resolve();
+                    // });
+                    deferred.resolve();
 				}
 			});
 		});
