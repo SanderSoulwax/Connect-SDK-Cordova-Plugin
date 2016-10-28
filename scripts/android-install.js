@@ -23,7 +23,7 @@ var paths = {
 };
 
 function safePath(unsafePath) {
-	return path.join(process.cwd().replace(' ', "\\ "), "./platforms/android/", unsafePath);
+	return path.join(process.cwd(), "./platforms/android/", unsafePath);
 }
 
 function AndroidInstall() {}
