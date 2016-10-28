@@ -15,7 +15,7 @@ var commands = {
 };
 
 var paths = {
-	"ConnectSDK_Repository": "https://github.com/ConnectSDK/Connect-SDK-Android.git",
+	"ConnectSDK_Repository": "https://github.com/terrabythia/Connect-SDK-Cordova-Plugin.git",
 	"ConnectSDK_Tag": "tags/1.6.0",
 	"FlingSDK_URL": "https://s3-us-west-1.amazonaws.com/amazon-fling/AmazonFling-SDK.zip",
 	"AmazonFling_Jar": "./csdk_tmp/android-sdk/lib/AmazonFling.jar",
@@ -78,8 +78,8 @@ AndroidInstall.prototype.executeStep = function (step) {
 	var self = this;
 	if (step < this.steps.length) {
 		var promise = this[this.steps[step]]();
+        console.log('Executing step: ' + (step+1));
 		promise.then(function () {
-		    console.log('Executing step: ' + (step+1));
 			self.executeStep(step + 1);
 		}, function (err) {
 			console.log("Encountered an error, reverting install steps");
