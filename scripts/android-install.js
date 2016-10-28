@@ -106,11 +106,7 @@ AndroidInstall.prototype.revertStep = function (step) {
 };
 
 AndroidInstall.prototype.createTemporaryDirectory = function () {
-
-    if (!fs.existsSync(safePath('./csdk_tmp'))) {
-        return Q.nfcall(fs.mkdir, safePath('./csdk_tmp'));
-    }
-    return Q.nfcall(function() {}, safePath('./csdk_tmp'));
+    return Q.nfcall(fs.mkdir, safePath('./csdk_tmp'));
 };
 
 AndroidInstall.prototype.revert_createTemporaryDirectory = function () {
