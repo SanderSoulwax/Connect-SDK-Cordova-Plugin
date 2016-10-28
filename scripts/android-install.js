@@ -175,8 +175,8 @@ AndroidInstall.prototype.downloadFlingSDK = function () {
 					// .catch(function (err) {
 					// 	deferred.reject(err);
 					// });
-                    fs.renameSync(safePath(paths.AmazonFling_Jar), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar"));
-                    fs.rename(safePath(paths.WhisperPlay_Jar), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar"), function() {
+                    fs.renameSync(safePath(paths.AmazonFling_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\\ '));
+                    fs.rename(safePath(paths.WhisperPlay_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\\ '), function() {
                         deferred.resolve();
                     });
 				}
