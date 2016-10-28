@@ -26,7 +26,7 @@ function safePath(unsafePath) {
     var cwd = process.cwd();
     //test
     cwd = '~/frismedia-projects/projects/frismedia/ekhartyoga_ionic_app';
-	return path.join(process.cwd(), "./platforms/android/", unsafePath);
+	return path.join(cwd, "./platforms/android/", unsafePath);
 }
 
 function AndroidInstall() {}
