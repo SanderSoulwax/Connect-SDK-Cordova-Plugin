@@ -23,10 +23,7 @@ var paths = {
 };
 
 function safePath(unsafePath) {
-    var cwd = process.cwd();
-    //test
-    cwd = '~/frismedia-projects/projects/frismedia/ekhartyoga_ionic_app';
-	return path.join(cwd, "./platforms/android/", unsafePath);
+	return path.join(process.cwd(), "./platforms/android/", unsafePath);
 }
 
 function AndroidInstall() {}
@@ -42,8 +39,8 @@ AndroidInstall.prototype.start = function () {
 	console.log("Starting ConnectSDK Android install");
 	var self = this;
 
-	var deferred = Q.defer();
-
+	// var deferred = Q.defer();
+    //
 	// Check for updated install steps
 	// console.log("Checking for updated configuration");
 	// http.get("http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/CordovaPlugin/1.6.0/Android/paths.json", function(res) {
@@ -167,22 +164,24 @@ AndroidInstall.prototype.downloadFlingSDK = function () {
 			uz.on('close', function () {
 				if (deferred.promise.inspect().state !== "rejected") {
 					// console.log("Moving AmazonFling.jar");
-					Q.nfcall(exec, commands.mv + " " + safePath(paths.AmazonFling_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\ '))
-					.then(function () {
-						console.log("Moving WhisperPlay.jar");
-						return Q.nfcall(exec, commands.mv + " " + safePath(paths.WhisperPlay_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\ '));
-					})
-					.then(function () {
-						deferred.resolve();
-					})
-					.catch(function (err) {
-						deferred.reject(err);
-					});
+					// Q.nfcall(exec, commands.mv + " " + safePath(paths.AmazonFling_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\ '))
+					// .then(function () {
+					// 	console.log("Moving WhisperPlay.jar");
+					// 	return Q.nfcall(exec, commands.mv + " " + safePath(paths.WhisperPlay_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\ '));
+					// })
+					// .then(function () {
+					// 	deferred.resolve();
+					// })
+					// .catch(function (err) {
+					// 	deferred.reject(err);
+					// });
                     // fs.renameSync(safePath(paths.AmazonFling_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\\ '));
                     // fs.rename(safePath(paths.WhisperPlay_Jar).replace(' ', '\\ '), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\\ '), function() {
                      //    deferred.resolve();
                     // });
-                    // deferred.resolve();
+
+                    deferred.resolve();
+
 				}
 			});
 		});
