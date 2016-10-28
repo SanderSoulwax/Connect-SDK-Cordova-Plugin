@@ -164,17 +164,21 @@ AndroidInstall.prototype.downloadFlingSDK = function () {
 			uz.on('close', function () {
 				if (deferred.promise.inspect().state !== "rejected") {
 					console.log("Moving AmazonFling.jar");
-					Q.nfcall(exec, commands.mv + " " + safePath(paths.AmazonFling_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\ '))
-					.then(function () {
-						console.log("Moving WhisperPlay.jar");
-						return Q.nfcall(exec, commands.mv + " " + safePath(paths.WhisperPlay_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\ '));
-					})
-					.then(function () {
-						deferred.resolve();
-					})
-					.catch(function (err) {
-						deferred.reject(err);
-					});
+					// Q.nfcall(exec, commands.mv + " " + safePath(paths.AmazonFling_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar").replace(' ', '\ '))
+					// .then(function () {
+					// 	console.log("Moving WhisperPlay.jar");
+					// 	return Q.nfcall(exec, commands.mv + " " + safePath(paths.WhisperPlay_Jar).replace(' ', '\\ ') + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar").replace(' ', '\ '));
+					// })
+					// .then(function () {
+					// 	deferred.resolve();
+					// })
+					// .catch(function (err) {
+					// 	deferred.reject(err);
+					// });
+                    fs.renameSync(safePath(paths.AmazonFling_Jar), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/AmazonFling.jar"));
+                    fs.rename(safePath(paths.WhisperPlay_Jar), safePath("./cordova-plugin-connectsdk/" + csdkDirectory + "/modules/firetv/libs/WhisperPlay.jar"), function() {
+                        deferred.resolve();
+                    });
 				}
 			});
 		});
