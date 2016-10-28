@@ -113,6 +113,7 @@ AndroidInstall.prototype.revert_createTemporaryDirectory = function () {
 	return Q.nfcall(exec, commands.rmRF + " " + safePath("./csdk_tmp"));
 };
 
+
 AndroidInstall.prototype.cloneConnectSDK = function () {
 	console.log("Cloning Connect-SDK-Android repository (" + paths.ConnectSDK_Tag + ")");
 	return Q.nfcall(fs.readdir, safePath('./cordova-plugin-connectsdk'))
@@ -120,7 +121,7 @@ AndroidInstall.prototype.cloneConnectSDK = function () {
 		for (var i = 0; i < files.length; i++) {
 			if (files[i].indexOf('Connect-SDK-Android') !== -1) {
 				csdkDirectory = files[i];
-				return Q.nfcall(exec, commands.mv + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory) + " " + safePath("./csdk_tmp/" + csdkDirectory));
+				return Q.nfcall(exec, commands.mv + " " + safePath("./cordova-plugin-connectsdk/" + csdkDirectory).replace(' ', '\\ ') + " " + safePath("./csdk_tmp/" + csdkDirectory).replace(' ', '\\ '));
 			}
 		}
 	})
