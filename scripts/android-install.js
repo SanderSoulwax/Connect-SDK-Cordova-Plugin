@@ -42,31 +42,36 @@ AndroidInstall.prototype.start = function () {
 	var deferred = Q.defer();
 
 	// Check for updated install steps
-	console.log("Checking for updated configuration");
-	http.get("http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/CordovaPlugin/1.6.0/Android/paths.json", function(res) {
-		var body = '';
+	// console.log("Checking for updated configuration");
+	// http.get("http://ec2-54-201-108-205.us-west-2.compute.amazonaws.com/CordovaPlugin/1.6.0/Android/paths.json", function(res) {
+	// 	var body = '';
+    //
+	// 	res.on('data', function(chunk){
+	// 		body += chunk;
+	// 	});
+    //
+	// 	res.on('end', function() {
+	// 		try {
+	// 			var tmp_paths = JSON.parse(body);
+	// 			paths = tmp_paths;
+	// 		} catch(err) {
+	// 			console.log("Error parsing updates, using default configuration (install might fail)");
+	// 		}
+	// 		deferred.resolve();
+	// 	});
+	// }).on('error', function(e) {
+	// 	console.log("Error checking for updates, using default configuration (install might fail)");
+	// 	deferred.resolve();
+	// });
+    //
+	// deferred.promise.then(function () {
+	// 	self.executeStep(0);
+	// });
 
-		res.on('data', function(chunk){
-			body += chunk;
-		});
+    console.log('Skipping check for updated configuration, because it\'s not reachable.');
+    self.executeStep(0);
 
-		res.on('end', function() {
-			try {
-				var tmp_paths = JSON.parse(body);
-				paths = tmp_paths;
-			} catch(err) {
-				console.log("Error parsing updates, using default configuration (install might fail)");
-			}
-			deferred.resolve();
-		});
-	}).on('error', function(e) {
-		console.log("Error checking for updates, using default configuration (install might fail)");
-		deferred.resolve();
-	});
 
-	deferred.promise.then(function () {
-		self.executeStep(0);
-	});
 };
 
 AndroidInstall.prototype.executeStep = function (step) {
@@ -74,6 +79,7 @@ AndroidInstall.prototype.executeStep = function (step) {
 	if (step < this.steps.length) {
 		var promise = this[this.steps[step]]();
 		promise.then(function () {
+		    console.log('Executing step: ' + (step+1));
 			self.executeStep(step + 1);
 		}, function (err) {
 			console.log("Encountered an error, reverting install steps");
